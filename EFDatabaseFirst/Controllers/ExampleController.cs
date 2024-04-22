@@ -16,7 +16,7 @@ namespace EFDatabaseFirst.Controllers
             _context = context;
         }
 
-        [HttpGet("{fromAge, toAge, departmentName}")]
+        [HttpGet]
         public async Task<ActionResult<IEnumerable<Employee>>> GetEmployees(int fromAge, int toAge, string departmentName)
         {
             var employee = _context.Employees.Where(e => e.Department.DepartmentName.Equals(departmentName)
