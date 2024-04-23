@@ -11,6 +11,7 @@ namespace EFCodeFirst.Controllers
     public class ExampleController : ControllerBase
     {
         private readonly CompanyDbContext _context;
+        private readonly string[] _gender = { "None", "Nam", "Nữ", "Không xác định" };
 
         public ExampleController(CompanyDbContext context)
         {
@@ -18,11 +19,19 @@ namespace EFCodeFirst.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Employee>>> GetEmployees(int fromAge, int toAge, string departmentName)
+        public async Task<ActionResult<IEnumerable<DetailEmployee>>> GetEmployees(int fromAge, int toAge, string departmentName)
         {
             var employee = _context.Employees.Where(e => e.Department.DepartmentName.Equals(departmentName)
                                                             && e.Age >= fromAge
-                                                            && e.Age <= toAge);
+                                                            && e.Age <= toAge)
+                                            .Select(e => new DetailEmployee
+                                            {
+                                                EmployeeId = e.EmployeeId,
+                                                EmployeeName = e.EmployeeName,
+                                                Age = e.Age,
+                                                Gender = _gender[e.Gender],
+                                                DepartmentName = e.Department.DepartmentName
+                                            });
 
             if (employee == null)
             {
