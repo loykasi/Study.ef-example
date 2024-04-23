@@ -11,7 +11,7 @@ namespace EFCodeFirst.Controllers
     public class ExampleController : ControllerBase
     {
         private readonly CompanyDbContext _context;
-        private readonly string[] _gender = { "None", "Nam", "Nữ", "Không xác định" };
+        private readonly string[] _gender = { "Not known", "Male", "Female", "Not applicable" };
 
         public ExampleController(CompanyDbContext context)
         {
